@@ -1,6 +1,7 @@
 虽然借鉴了网上的经验，不过大部分自己手写出来，感觉还是挺不错的...
 
 PS：有些地方还需要改改样式,先展示一下：
+
 ![10月份](https://github.com/lc-dmx/calendar/blob/master/16-10.jpg)
 ![11月份](https://github.com/lc-dmx/calendar/blob/master/16-11.jpg)
 ![1月份](https://github.com/lc-dmx/calendar/blob/master/17-1.jpg)
@@ -28,7 +29,7 @@ PS：有些地方还需要改改样式,先展示一下：
 		firstday = new Date(year, month-1, 1);	//获取当月的第一天
 		dayOfWeek = firstday.getDay();
 
-//创建月份数组,便于分别每个月有几天
+//创建月份数组,便于计算每个月有几天
 		daysPerMonth = new Array(31, 28 + isLeapYear(year), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
 ```
 ```
