@@ -1,13 +1,15 @@
 虽然借鉴了网上的经验，不过大部分自己手写出来，感觉还是挺不错的...
+
 PS：有些地方还需要改改样式
-先展示以下：
+
+先展一下：
 ![10月份](https://github.com/lc-dmx/calendar/blob/master/16-10.jpg)
 ![11月份](https://github.com/lc-dmx/calendar/blob/master/16-11.jpg)
 ![1月份](https://github.com/lc-dmx/calendar/blob/master/17-1.jpg)
 
 主要代码如下：
-css实现月份调节按钮
 ```
+//css实现月份调节按钮
 #pre {
 			position: absolute;
 			top: 12px;
@@ -18,8 +20,8 @@ css实现月份调节按钮
 			cursor: pointer;
 		}
 ```
-判断是否闰年
 ```
+//判断是否闰年
 //闰年能被4整除且不能被100整除，或能被400整除
 		return (year % 4 == 0) && (year % 100 != 0 || year % 400 == 0);
 ```
