@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>calendar</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.js"></script>
+	<style type="text/css">
+		*{
+			padding: 0;
+			margin:0;
+			font:14px Microsoft YaHei;
+		}
+		#outer{
+			width: 200px;
+			height: 30px;
+			margin: 0 auto;
+			position: relative;
+		}
+		#header{
+			text-align: center;
+		}
+		#calendarTitle {
+			line-height: 40px;
+			cursor: default;
+		}
+		/*
+		设置上个月的按钮图标
+		 */
+		#pre {
+			position: absolute;
+			top: 15px;
+			left: 0;
+			border-top: 5px solid transparent;
+			border-right: 5px solid #000;
+			border-bottom: 5px solid transparent;
+			cursor: pointer;
+		}
+		 
+		/*
+		设置下个月的按钮图标
+		 */
+		#next {
+			position: absolute;
+			top: 15px;
+			right: 0;
+			border-top: 5px solid transparent;
+			border-left: 5px solid #000;
+			border-bottom: 5px solid transparent;
+			cursor: pointer;
+		}
+		#calendar{
+			position: absolute;
+			top: 40px;
+		}
+		#calendarTable{
+			width: 200px;
+			border-collapse: collapse;
+			cursor: default;
+		}
+		#calendarTable thead th{
+			font-weight: 700;
+			line-height: 22px;
+			border-bottom: 1px solid #eee;
+		}
+		#calendarTable td{
+			line-height: 20px;
+			text-align: center;
+			border: 1px solid #fff;
+			border-collapse: collapse;
+		}
+		#calendarTable td #today{
+			width: 27px;
+			height: 19px;
+			color:#09f;
+			border: 1px solid #09f;
+			border-radius: 5px;
+			background: radial-gradient(#d2e6fd,#fff);
+			margin:-10px;
+			display: inline-block;
+		}
+		.hover{
+			color:#09f;
+			border-radius: 5px;
+			background: #eee;
+			opacity: 0.6;
+		}
+	</style>
+</head>
+<body>
+<div id="outer">
+<div id="header">
+	<span id="pre"></span>
+	<span id="calendarTitle"></span>
+	<span id="next"></span>
+</div>
+	<div id="calendar">
+		<table id="calendarTable" cellspacing="0">
+			<thead>
+				<tr>
+					<th>日</th>
+					<th>一</th>
+					<th>二</th>
+					<th>三</th>
+					<th>四</th>
+					<th>五</th>
+					<th>六</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>  
+					<td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+	                    		</tr>
+	                    		<tr>
+	                      			<td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+	                    		</tr>
+	                    		<tr>
+	                      			<td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+	                    		</tr>
+	                    		<tr>
+	                      			<td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+	                    		</tr>
+	                    		<tr>
+	                      			<td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+	                    		</tr>
+	                    		<tr>
+	                      			<td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+	                    		</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	//获取当前日期
+	var date = new Date();
+	//获取年月日
+	var year = date.getFullYear();
+	var month = date.getMonth()+1;//月份是从0开始计算，获取的值比正常月份的值少1
+	var day = date.getDate();
+
+	//判断当前年份是否是闰年(闰年2月份有29天，平年2月份只有28天)
+	function isLeapYear(year) {
+		//闰年能被4整除且不能被100整除，或能被400整除
+		return (year % 4 == 0) && (year % 100 != 0 || year % 400 == 0);
+	}
+
+	function getFirstDay(){
+		//判断当月第一天星期几，0代表星期天，1代表星期一
+		firstday = new Date(year, month-1, 1);	//获取当月的第一天
+		dayOfWeek = firstday.getDay();
+		//console.log(dayOfWeek);
+
+		//创建月份数组
+		daysPerMonth = new Array(31, 28 + isLeapYear(year), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+		//确定日期表格所需的行数，第一天所在位置加上当月天数
+		//rowNum = Math.ceil((dayOfWeek + daysPerMonth[month]) / 7);
+	}
+
+	function drawCalendar(){
+		$("#calendarTitle").text(year + '年' + month + '月' + day + '日');
+		//二维数组创建日期表格
+		for (var i = 0; i < 6; i ++) {
+			for (var k = 0; k < 7; k++) {
+				//为每个表格创建索引,从0开始
+				var index = 7 * i + k;
+				//将当月的1号与星期进行匹配      
+				var date = index - dayOfWeek + 1;
+				//console.log(date);
+				//索引小于等于0或者大于当月最大天数值就用空表格代替    
+				(date <= 0 || date > daysPerMonth[month-1]) ? date = '': date = index - dayOfWeek + 1;
+				/*实现天数对接（未成功）
+				if (date <= 0){
+					date += daysPerMonth[month-2];
+				}else if (date > daysPerMonth[month-1]){
+					date -= daysPerMonth[month-1] ;
+				}else{
+					date = index - dayOfWeek + 1;
+				}
+				*/
+
+				date==day ? $("#calendarTable tbody tr").eq(i).find("td").eq(k).html("<a id='today'>" + date + "</a>") : $("#calendarTable tbody tr").eq(i).find("td").eq(k).html(date);
+			}
+		}
+	}
+	$(document).ready(function(){
+		getFirstDay();
+		isLeapYear(year);
+		drawCalendar();
+	})
+	//上一个月
+	$("#pre").click(function(){
+		month--;
+	    	if(month==0){
+	     		month=12;
+	     		year--;
+	    	}
+	    	getFirstDay();
+		isLeapYear(year);
+		drawCalendar();
+	});
+	 //下一个月
+	$("#next").click(function(){
+	    	month++;
+	    	if(month==13){
+	     		month=1;
+	     		year++;
+	    	}
+	    	getFirstDay();
+		isLeapYear(year);
+		drawCalendar();
+	});
+	//判断td里面有值时加上边框样式
+	$("td").mouseover(function(){
+		if( $(this).html() != "" ){
+			$(this).addClass("hover");
+		}
+	})
+	$("td").mouseout(function(){
+		if( $(this).html() != "" ){
+			$(this).removeClass("hover");
+		}
+	})
+</script>
+</body>
+</html>
