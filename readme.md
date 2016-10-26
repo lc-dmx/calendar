@@ -1,6 +1,7 @@
-虽然借鉴了网上的经验，不过大部分自己手写出来，感觉还是挺不错的...
+[运行地址](http://4.lcdmx.applinzi.com/)
 
-PS：有些地方还需要改改样式,先展示一下：
+虽然借鉴了网上的经验，不过大部分自己手写出来，感觉还是挺不错的...
+(PS：有些地方还需要改改样式,先展示一下)
 
 ![10月份](https://github.com/lc-dmx/calendar/blob/master/16-10.jpg)
 ![11月份](https://github.com/lc-dmx/calendar/blob/master/16-11.jpg)
